@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.firebase.modeldata.DetailSiswa
 import com.example.firebase.modeldata.UIStateSiswa
+import com.example.firebase.modeldata.toDataSiswa
 import com.example.firebase.repositori.RepositorySiswa
 
 class EntryViewModel(private val repositorySiswa: RepositorySiswa): ViewModel() {
@@ -22,5 +23,11 @@ class EntryViewModel(private val repositorySiswa: RepositorySiswa): ViewModel() 
         uiStateSiswa =
             UIStateSiswa(detailSiswa = detailSiswa, isEntryValid = validasiInput
                     (detailSiswa))
+    }
+    /* Fungsi untuk menyimpan data yang di-entry */
+    suspend fun addSiswa() {
+        if (validasiInput()) {
+            repositorySiswa.postDataSiswa(uiStateSiswa.detailSiswa.toDataSiswa())
+        }
     }
 }
